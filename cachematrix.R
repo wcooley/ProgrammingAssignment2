@@ -20,7 +20,7 @@ makeCacheMatrix <- function(x = matrix()) {
         # If altx is already set (non-NULL), then we're invalidating the cache;
         # otherwise we're just initializing it.
         if (!is.null(altx)) message("invalidating cache")
-        altx <<- NULL
+        set_alt(NULL)
     }
 
     # getter for `x` in the parent scope
@@ -34,7 +34,6 @@ makeCacheMatrix <- function(x = matrix()) {
 
     list(set=set, get=get, set_alt=set_alt, get_alt=get_alt)
 }
-
 
 # The `cacheSolve` function returns the cached inverse of the matrix inside the
 # scope accessed by the functions in `x`, solving and caching the inverse if it
