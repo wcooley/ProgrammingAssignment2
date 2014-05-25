@@ -6,6 +6,7 @@
 
 # The `makeCacheMatrix` function creates a list of closures, which access a
 # stored matrix and an alternative representation of the matrix.
+#
 # Returns a list of functions which encapsulate the matrix object:
 #  * getter & setter for the matrix
 #  * getter & setter for the alternative representation
@@ -26,8 +27,10 @@ makeCacheMatrix <- function(x = matrix()) {
     # getter for `x` in the parent scope
     get <- function() x
 
-    # setter, which updates `altx` in the parent scope
-    set_alt <- function(alt) altx <<- alt
+    # setter for `altx` in the parent scope
+    set_alt <- function(alt) {
+        altx <<- alt
+    }
 
     # getter for `altx` in the parent scope
     get_alt <- function() altx
