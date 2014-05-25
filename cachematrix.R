@@ -1,7 +1,14 @@
-## Put comments here that give an overall description of what your
-## functions do
+#
+# Functions `makeCacheMatrix` and `cacheSolve`.
+#
+# These are so close to the examples `makeVector` and `cachemean` that it almost
+# feels like cheating...
 
-## Write a short comment describing this function
+# The `makeCacheMatrix` function creates a list of closures, which access a
+# stored matrix and an alternative representation of the matrix.
+# Returns a list of functions which encapsulate the matrix object:
+#  * getter & setter for the matrix
+#  * getter & setter for the alternative representation
 
 makeCacheMatrix <- function(x = matrix()) {
     invmatrix <- NULL
@@ -19,7 +26,9 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+# The `cacheSolve` function returns the cached inverse of the matrix inside the
+# scope accessed by the functions in `x`, solving and caching the inverse if it
+# does not already exist.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
