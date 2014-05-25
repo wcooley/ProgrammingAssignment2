@@ -11,18 +11,28 @@
 #  * getter & setter for the alternative representation
 
 makeCacheMatrix <- function(x = matrix()) {
-    invmatrix <- NULL
+    # Initialize the matrix alternative
+    altx <- NULL
+
+    # setter, which sets the `x` and `altx` in the parent scope
     set <- function(y) {
         x <<- y
-        m <<- NULL
+        # If altx is already set (non-NULL), then we're invalidating the cache;
+        # otherwise we're just initializing it.
+        if (!is.null(altx)) message("invalidating cache")
+        altx <<- NULL
     }
 
+    # getter for `x` in the parent scope
     get <- function() x
 
-    setinverse <- function(inv) invmatrix <<- inv
-    getinverse <- function() invmatrix
+    # setter, which updates `altx` in the parent scope
+    set_alt <- function(alt) altx <<- alt
 
-    list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
+    # getter for `altx` in the parent scope
+    get_alt <- function() altx
+
+    list(set=set, get=get, set_alt=set_alt, get_alt=get_alt)
 }
 
 
@@ -31,14 +41,15 @@ makeCacheMatrix <- function(x = matrix()) {
 # does not already exist.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-    m <- x$getinverse()
+
+    # `m` is NULL if the cache is empty
+    m <- x$get_alt()
     if(!is.null(m)) {
         message("getting cached data")
         return(m)
     }
     data <- x$get()
     m <- solve(data, ...)
-    x$setinverse(m)
+    x$set_alt(m)
     m
 }
