@@ -44,12 +44,13 @@ cacheSolve <- function(x, ...) {
 
     # `m` is NULL if the cache is empty
     m <- x$get_alt()
-    if(!is.null(m)) {
-        message("getting cached data")
-        return(m)
+    if (is.null(m)) {
+        data <- x$get()
+        m <- solve(data, ...)
+        x$set_alt(m)
     }
-    data <- x$get()
-    m <- solve(data, ...)
-    x$set_alt(m)
+    else {
+        message("getting cached data")
+    }
     m
 }
